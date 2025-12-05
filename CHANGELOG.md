@@ -1,5 +1,54 @@
 # Changelog
 
+## v0.4.34 (fix/wsl-proxy)
+
+### 🐛 Bug Fixes
+
+- **fix(proxy):** 修复 Node.js 原生 fetch 代理支持问题
+  - 问题：原实现使用 `https-proxy-agent`/`http-proxy-agent` 的 `agent` 属性，但 Node.js 原生 fetch 基于 undici，不支持该属性
+  - 解决方案：使用 `undici` 的 `ProxyAgent` 配合 `dispatcher` 属性
+  - 影响：修复代理配置无效导致的 "fetch failed" 错误
+
+### 📦 Dependencies
+
+- 新增 `undici@^7.16.0` 依赖
+
+### 📝 Changed Files
+
+| 文件                              | 变更说明                                          |
+| --------------------------------- | ------------------------------------------------- |
+| `package.json`                    | 添加 `undici` 依赖                                |
+| `package-lock.json`               | 锁定 `undici` 版本                                |
+| `source/utils/core/proxyUtils.ts` | 重构代理实现，使用 undici ProxyAgent + dispatcher |
+| `source/api/models.ts`            | 为模型获取 API 添加代理支持                       |
+
+### 🔧 Technical Details
+
+```typescript
+// Before (broken)
+import {HttpsProxyAgent} from 'https-proxy-agent';
+return {...options, agent}; // ❌ Node.js fetch 不支持
+
+// After (fixed)
+import {ProxyAgent} from 'undici';
+return {...options, dispatcher: agent}; // ✅ 正确方式
+```
+
+### 📋 Development Progress
+
+- [x] 检查 undici 依赖并安装
+- [x] 修改 proxyUtils.ts 使用 undici ProxyAgent + dispatcher
+- [x] 验证构建成功
+- [ ] 测试代理功能正常工作
+
+### 🔀 Commits
+
+- 修复：Node.js 原生 fetch 代理支持问题 (commit: a833101)
+- 移除本地配置文件 (commit: a7cd5b6)
+- 移除本地开发脚本 start:dev (commit: 6798077)
+
+---
+
 ## v0.4.33
 
 - Update dependencies and optimize table rendering
