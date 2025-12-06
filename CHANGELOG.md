@@ -1,5 +1,6 @@
 # Changelog
 
+<<<<<<< HEAD
 ## v0.4.34 (fix/wsl-proxy)
 
 ### 🐛 Bug Fixes
@@ -48,6 +49,15 @@ return {...options, dispatcher: agent}; // ✅ 正确方式
 - 移除本地开发脚本 start:dev (commit: 6798077)
 
 ---
+=======
+## v0.4.35
+
+- Add Web API polyfill support for Node.js versions 16-18.
+
+## v0.4.34
+
+- Add Anthropic cache TL configuration options
+>>>>>>> main
 
 ## v0.4.33
 

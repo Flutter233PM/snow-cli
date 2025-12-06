@@ -58,7 +58,7 @@ jobs:
             
             ### What's New
 
-            - Update dependencies and optimize table rendering
+            - Add Web API polyfill support for Node.js versions 16-18.
             
             ### Installation
             ```bash
